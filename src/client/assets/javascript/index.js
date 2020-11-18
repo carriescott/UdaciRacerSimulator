@@ -80,12 +80,18 @@ async function delay(ms) {
 
 // This async function controls the flow of the race, add the logic and error handling
 async function handleCreateRace() {
-	const player_id = store.player_id;
-	const track_id = store.track_id;
-	await getRaceId(player_id, track_id);
-	await runCountdown();
-	await startRace(store.race_id);
-	await runRace(store.race_id);
+	try {
+		const player_id = store.player_id;
+		const track_id = store.track_id;
+		await getRaceId(player_id, track_id);
+		await runCountdown();
+		await startRace(store.race_id);
+		await runRace(store.race_id);
+	} catch (error) {
+		console.log("Problem creating the race ::", error.message);
+		console.error(error)
+	}
+
 }
 
 function getRaceId (player_id, track_id) {
